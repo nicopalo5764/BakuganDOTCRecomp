@@ -1,0 +1,8 @@
+#pragma once
+#include <cstdint>
+inline constexpr wchar_t kXexHash[] = L"@XEX_HASH@";
+inline constexpr uint64_t kXexSize = @XEX_SIZE@ULL;
+inline constexpr wchar_t kVersion[] = L"@PROJECT_VERSION_TEXT@";
+struct RequiredFile { const wchar_t* name; uint64_t size; };
+inline constexpr RequiredFile kRequiredFiles[] = {
+@REQUIRED_FILES@};

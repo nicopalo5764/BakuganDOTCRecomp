@@ -1,0 +1,9 @@
+{
+  "sdk_version": "0.10.0",
+  "platform": "win-amd64",
+  "sdk_build_timestamp": "20260821_2216",
+  "rexglue_sha256": "04014c2e5eef3c40bddc490d413e910e5ba98d81aa3da1c1f5d43dd29728ee3a",
+  "rexruntime_sha256": "e359209fb2b0570e693c966d4c1d99a82465d36ef70d033833fae56adb2f1b7a",
+  "rexgpu_xenos_sha256": "2dc285556f7870af22d768ca53582582e2ee10619c7dc11eef52546979274802",
+  "note": "GPU plugin was built by the project owner from ReXGlue (confirmed 2026-09-17). Exact commit/build options remain to be recorded. It differs from the installed SDK DLL; official prebuilt compatibility must be tested."
+}

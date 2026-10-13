@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "project_version": "0.1.0-preview",
+  "sdk_version": "0.10.0",
+  "title_id": "41560891",
+  "media_id": "01048E5A",
+  "region": "Not independently verified; identify this build by SHA-256",
+  "xex": {
+    "name": "default.xex",
+    "size": 7708672,
+    "sha256": "454b358a66585ed336dae4b9a44f00c2170a54dcd933a3b6f02cf21ed7863019"
+  },
+  "required_files": [
+    { "name": "d01.dat", "size": 1486018560 },
+    { "name": "d02.dat", "size": 1369090048 },
+    { "name": "d03.dat", "size": 632233984 }
+  ]
+}

@@ -1,0 +1,9 @@
+El paquete portable se prepara con scripts/Package.ps1.
+El instalador es opcional y necesita Inno Setup 6 con soporte x64compatible.
+
+ISCC.exe /DPackageDir="RUTA_ABSOLUTA_AL_PAQUETE" installer\BakuganDOTC_Setup.iss
+
+El instalador crea accesos Jugar y Configurar. El configurador verifica la copia
+del usuario en cada inicio. Ningun archivo original del juego se incluye.
+Los ajustes se guardan en %LOCALAPPDATA%\BakuganDOTCRecomp\launcher.ini.
+Revisar docs/RELEASE_CHECKLIST.md antes de publicar cualquier binario.

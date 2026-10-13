@@ -1,0 +1,17 @@
+name: Launcher build
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure standalone launcher (no SDK or game files)
+        run: cmake -S launcher -B out/launcher -A x64
+      - name: Build
+        run: cmake --build out/launcher --config Release
+      - name: Verify invalid input is rejected by launcher and scripts
+        shell: pwsh
+        run: |
+          ./scripts/Test-Validation.ps1 -Launcher out/launcher/Release/BakuganLauncher.exe

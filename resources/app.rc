@@ -1,0 +1,3 @@
+// The same artwork is used by Explorer and the running game window.
+1 ICON "bakugan.ico"
+2 RCDATA "bakugan.ico"

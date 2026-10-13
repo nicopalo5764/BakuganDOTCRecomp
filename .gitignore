@@ -1,0 +1,182 @@
+# =============================================================================
+#  BakuganDOTCRecomp - .gitignore
+#  Solo se versionan fuentes propias, manifiesto, scripts, docs y licencias.
+#  NUNCA se suben archivos del juego, código recompilado ni binarios.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Archivos originales del juego (Xbox 360) - deben quedarse en local
+# -----------------------------------------------------------------------------
+*.xex
+*.iso
+*.dat
+*.god
+*.xzp
+*.xcp
+*.stfs
+default.xex
+/game/
+/assets/
+/bakugan_tm__dotc/
+/Bakugan_TM__DOTC/
+
+# -----------------------------------------------------------------------------
+# Bases de ingeniería inversa (IDA Pro, Ghidra, Binary Ninja)
+# -----------------------------------------------------------------------------
+*.i64
+*.idb
+*.id0
+*.id1
+*.id2
+*.id3
+*.nam
+*.til
+*.$$$
+*.gpr
+*.rep/
+*.bndb
+ida_*.json
+
+# -----------------------------------------------------------------------------
+# Código generado por ReXGlue / XenonRecomp (derivado del XEX)
+# Se regenera con scripts/Build.ps1 a partir de la copia del usuario.
+# -----------------------------------------------------------------------------
+/generated/
+recompile.log
+ppc_context.h
+ppc_recomp*.cpp
+ppc_func_mapping.cpp
+
+# -----------------------------------------------------------------------------
+# SDK de terceros (se obtiene por separado, ver docs/DEPENDENCIES.md)
+# -----------------------------------------------------------------------------
+/rexglue-sdk-src/
+/rexglue-sdk/
+/thirdparty/
+/sdk/
+gamecontrollerdb.txt
+
+# -----------------------------------------------------------------------------
+# Salidas de compilación, empaquetado e instalador
+# -----------------------------------------------------------------------------
+/out/
+/dist/
+/build/
+/build-*/
+/cmake-build-*/
+/installer/release/
+/installer/output/
+/installer/Output/
+build-info.json
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+/CMakeUserPresets.json
+
+# Ninja / MSBuild / Visual Studio
+.ninja_deps
+.ninja_log
+build.ninja
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.suo
+*.user
+*.userosscache
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+ipch/
+x64/
+x86/
+[Dd]ebug/
+[Rr]elease/
+[Rr]el[Ww]ith[Dd]eb[Ii]nfo/
+[Mm]in[Ss]ize[Rr]el/
+
+# Binarios y objetos compilados
+*.exe
+*.dll
+*.lib
+*.exp
+*.pdb
+*.ilk
+*.obj
+*.o
+*.a
+*.so
+*.dylib
+*.res
+*.pch
+*.ipch
+*.tlog
+*.lastbuildstate
+
+# Archivos comprimidos / paquetes
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+
+# -----------------------------------------------------------------------------
+# Datos de ejecución: logs, partidas, caché, configuración personal
+# -----------------------------------------------------------------------------
+*.log
+*.dmp
+*.mdmp
+/logs/
+/saves/
+/cache/
+/content/
+/bakugandotc.toml
+debuglog.txt
+
+# -----------------------------------------------------------------------------
+# Herramientas locales de investigación (no forman parte del proyecto público)
+# -----------------------------------------------------------------------------
+/src/hooks/audio_debug_hooks.cpp
+/music-memory-probe.ps1
+/iniciar.bat
+/Nuevo Documento*
+/notas*.txt
+
+# -----------------------------------------------------------------------------
+# Asistentes de IA
+# -----------------------------------------------------------------------------
+/CLAUDE.md
+/.claude/
+/Claude outputs/
+
+# -----------------------------------------------------------------------------
+# Editores e IDEs
+# -----------------------------------------------------------------------------
+/.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+*.orig
+
+# -----------------------------------------------------------------------------
+# Sistema operativo
+# -----------------------------------------------------------------------------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+._*
