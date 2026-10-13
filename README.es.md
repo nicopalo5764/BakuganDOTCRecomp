@@ -23,8 +23,8 @@ de hardware. Consulta [problemas conocidos](docs/KNOWN_ISSUES.md).
 1. [Requisitos](#1-requisitos)
 2. [Preparar tu copia del juego](#2-preparar-tu-copia-del-juego)
 3. [Descargar el proyecto](#3-descargar-el-proyecto)
-4. [Conseguir el SDK de ReXGlue](#4-conseguir-el-sdk-de-rexglue)
-5. [Generar y compilar](#5-generar-y-compilar)
+4. [Compilación rápida: EasyBuild.bat](#4-compilación-rápida-easybuildbat) ← **lo más fácil**
+5. [Compilación manual](#5-compilación-manual)
 6. [Jugar](#6-jugar)
 7. [Opcional: paquete portable e instalador](#7-opcional-paquete-portable-e-instalador)
 8. [Solución de problemas](#8-solución-de-problemas)
@@ -39,8 +39,8 @@ de hardware. Consulta [problemas conocidos](docs/KNOWN_ISSUES.md).
 | Sistema | Windows 10/11 **x64** (única plataforma probada) |
 | GPU | Moderna, con drivers actualizados |
 | Visual Studio 2022 | Carga de trabajo **Desarrollo para el escritorio con C++**, con los componentes **Herramientas de Clang de C++ para Windows** (LLVM) y **Herramientas de CMake de C++ para Windows** |
-| ReXGlue SDK | Versión **0.10.0**, Windows AMD64 (ver [paso 4](#4-conseguir-el-sdk-de-rexglue)) |
-| Git | Para clonar el repositorio |
+| ReXGlue SDK | Versión **0.10.0**, Windows AMD64. `EasyBuild.bat` lo descarga solo (manual: [paso 5.1](#51-conseguir-el-sdk-de-rexglue)) |
+| Git | Opcional: también puedes descargar el proyecto como ZIP |
 | Juego | Tu copia de Bakugan: Defenders of the Core (Xbox 360), ya extraída |
 | Espacio en disco | ~4 GB para el juego + ~1 GB para la compilación |
 
@@ -100,44 +100,65 @@ Si responde `Compatible executable and expected data sizes`, todo está bien.
 
 ---
 
-## 4. Conseguir el SDK de ReXGlue
+## 4. Compilación rápida: EasyBuild.bat
+
+Con Visual Studio instalado (paso 1) y tu juego extraído (paso 2),
+**haz doble clic en `EasyBuild.bat`** en la carpeta del proyecto. El script:
+
+1. Te pide la carpeta del juego con un selector y la verifica.
+2. Comprueba que Visual Studio tenga los componentes de C++, Clang y CMake. Si
+   faltan, te dice qué instalar y puede instalarlos por ti con `winget`.
+3. Descarga el SDK oficial de ReXGlue 0.10.0 (~43 MB) en `tools\` y verifica
+   su huella.
+4. Genera el código y compila, con tantos procesos en paralelo como permitan tu
+   CPU y tu RAM.
+5. Deja el launcher configurado con tu carpeta del juego y te ofrece abrirlo.
+
+Recuerda la carpeta del juego para la próxima vez. Al terminar, el juego queda
+en `out\build\publish-release\` y puedes pasar a [Jugar](#6-jugar).
+
+> ¿No tienes Git? En la página de GitHub haz clic en **Code → Download ZIP**,
+> descomprímelo y haz doble clic en `EasyBuild.bat`.
+
+---
+
+## 5. Compilación manual
+
+Solo hace falta si quieres controlar cada paso.
+
+### 5.1 Conseguir el SDK de ReXGlue
 
 1. Descarga **ReXGlue 0.10.0 para Windows AMD64** desde las
    [releases oficiales](https://github.com/rexglue/rexglue-sdk/releases).
-2. Descomprímelo en una carpeta fija, por ejemplo `C:\Herramientas\rexglue-0.10.0`.
+2. Descomprímelo en una carpeta fija, por ejemplo `C:\Herramientas`. Se crea una carpeta `win-amd64`.
    Esa carpeta (el *SdkRoot*) debe contener:
 
    ```
-   C:\Herramientas\rexglue-0.10.0\
+   C:\Herramientas\win-amd64\
    ├── bin\rexglue.exe
    ├── bin\rexruntime.dll
    └── include\rex\version.h
    ```
 
-3. Localiza el complemento gráfico **`rexgpu-xenos.dll`** dentro del SDK.
+3. El complemento gráfico es `bin\rexgpu-xenos.dll`, dentro del SDK.
 
 Las huellas SHA-256 de las herramientas probadas están en
-[dependencies.lock.json](dependencies.lock.json). El `rexgpu-xenos.dll` usado
-en las pruebas es una compilación propia de ReXGlue y **no coincide** con el
-del SDK oficial. Si usas el oficial (o cualquier otro), añade
-`-AllowUnverifiedDependencies` al compilar. El build quedará marcado como
-"pendiente de validar". Más información en [dependencias](docs/DEPENDENCIES.md).
+[dependencies.lock.json](dependencies.lock.json). El SDK oficial coincide con
+ellas, incluido su `rexgpu-xenos.dll`. También se acepta una compilación propia
+del complemento hecha por el autor. Para cualquier otro DLL, añade
+`-AllowUnverifiedDependencies`: el build quedará marcado como "pendiente de
+validar". Más información en [dependencias](docs/DEPENDENCIES.md).
 
----
-
-## 5. Generar y compilar
+### 5.2 Generar y compilar
 
 Desde la carpeta del proyecto, en PowerShell:
 
 ```powershell
 .\scripts\Build.ps1 `
   -GameRoot      "C:\Juegos\Bakugan_TM__DOTC" `
-  -SdkRoot       "C:\Herramientas\rexglue-0.10.0" `
-  -GpuPluginPath "C:\Herramientas\rexglue-0.10.0\RUTA\rexgpu-xenos.dll" `
-  -AllowUnverifiedDependencies
+  -SdkRoot       "C:\Herramientas\win-amd64" `
+  -GpuPluginPath "C:\Herramientas\win-amd64\bin\rexgpu-xenos.dll"
 ```
-
-(Quita `-AllowUnverifiedDependencies` si tus DLL coinciden con las huellas del lock.)
 
 Qué hace el script, en orden:
 
@@ -223,7 +244,7 @@ completa se usa la resolución del escritorio.
 **Paquete portable** (ZIP con binarios, docs, licencias y sumas SHA-256):
 
 ```powershell
-.\scripts\Package.ps1 -SdkRoot "C:\Herramientas\rexglue-0.10.0" `
+.\scripts\Package.ps1 -SdkRoot "C:\Herramientas\win-amd64" `
   -ControllerDatabase "C:\Ruta\gamecontrollerdb.txt"
 ```
 
@@ -250,7 +271,7 @@ y [cómo publicar](docs/PUBLISHING.md).
 | `Unsupported or modified default.xex` | Tu XEX no es la versión admitida (otra región, actualizado o modificado). Compara su SHA-256 con `compatibility.json`. |
 | `Missing or unexpected size: d0X.dat` | Falta un `.dat` o la extracción quedó incompleta. Vuelve a extraer el disco. |
 | `This project requires ReXGlue 0.10.0` | `-SdkRoot` apunta a otra versión del SDK o a la carpeta equivocada. Debe contener `include\rex\version.h`. |
-| `Dependency hashes differ from the tested build` | Tus DLL/herramientas no son las probadas. Añade `-AllowUnverifiedDependencies`. |
+| `Dependency hashes differ from the tested build` | Tu SDK o DLL no es uno de los probados. Usa la release oficial 0.10.0, o añade `-AllowUnverifiedDependencies`. |
 | `Install Visual Studio with Desktop development with C++...` | Falta Visual Studio o la carga de trabajo de C++. |
 | `Missing build tool: ...clang++.exe` / `ninja.exe` | Instala en Visual Studio los componentes **Clang** y **CMake** (paso 1). |
 | `Codegen did not register required function 0x...` | El generador no aplicó las funciones del manifiesto. Comprueba que usas el SDK 0.10.0 y el `bakugandotc_manifest.toml` del repo sin modificar. |

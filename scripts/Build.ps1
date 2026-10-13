@@ -18,7 +18,9 @@ if ($versionHeader -notmatch ('REXGLUE_VERSION_STRING\s+"' + [regex]::Escape($lo
 $actualGenerator = (Get-FileHash -LiteralPath (Join-Path $sdk 'bin/rexglue.exe')).Hash.ToLowerInvariant()
 $actualRuntime = (Get-FileHash -LiteralPath (Join-Path $sdk 'bin/rexruntime.dll')).Hash.ToLowerInvariant()
 $actualGpu = (Get-FileHash -LiteralPath $gpu).Hash.ToLowerInvariant()
-$dependenciesVerified = $actualGenerator -eq $lock.rexglue_sha256 -and $actualRuntime -eq $lock.rexruntime_sha256 -and $actualGpu -eq $lock.rexgpu_xenos_sha256
+# Several GPU plugin builds are known to work; any of them counts as verified.
+$acceptedGpu = @($lock.rexgpu_xenos | ForEach-Object { $_.sha256.ToLowerInvariant() })
+$dependenciesVerified = $actualGenerator -eq $lock.rexglue_sha256 -and $actualRuntime -eq $lock.rexruntime_sha256 -and ($acceptedGpu -contains $actualGpu)
 if (!$dependenciesVerified) {
     if (!$AllowUnverifiedDependencies) { throw 'Dependency hashes differ from the tested build. Use -AllowUnverifiedDependencies explicitly to test another build of this SDK version.' }
     Write-Warning 'Using dependencies not yet validated with this project. Actual hashes will be recorded in build-info.json.'

@@ -6,3 +6,4 @@
 *.json text eol=lf
 *.ps1 text eol=crlf
 *.iss text eol=crlf
+*.bat text eol=crlf

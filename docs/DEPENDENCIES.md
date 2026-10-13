@@ -4,16 +4,19 @@ La instalación usada para la prueba es ReXGlue 0.10.0, Windows AMD64, con sello
 de compilación `20260821_2216`. Véanse las huellas en `dependencies.lock.json`.
 El nombre de versión por sí solo no identifica una DLL personalizada.
 
-Se comprobó que `rexruntime.dll` coincide con el SDK instalado, pero
-`rexgpu-xenos.dll` de la versión funcional no coincide con el del SDK.
-El autor confirmó que compiló ese complemento desde ReXGlue. Falta registrar
-el commit y las opciones exactas de esa compilación.
+`rexglue.exe` y `rexruntime.dll` coinciden byte a byte con la release oficial
+`rexglue-sdk-0.10.0-win-amd64.zip` (cuya huella también está en el lock).
 
-Conserva el DLL funcional y pásalo mediante `-GpuPluginPath`. Para probar las
-versiones precompiladas oficiales usa `-AllowUnverifiedDependencies`. El script
-registrará los hashes reales y el estado sin verificar; no presupone que fallarán
-ni que funcionarán. Tras probarlas, actualiza el archivo lock con sus huellas y
-documenta el origen y los resultados.
+Se aceptan dos `rexgpu-xenos.dll`, ambos probados por el autor:
+
+- El de la release oficial 0.10.0 (`bin/rexgpu-xenos.dll`). Es el que usa
+  `EasyBuild.bat` por defecto.
+- Una compilación propia desde ReXGlue. Falta registrar el commit y las
+  opciones exactas de esa compilación.
+
+Cualquier otro DLL requiere `-AllowUnverifiedDependencies`. El script registrará
+los hashes reales y el estado sin verificar. Tras probarlo, añádelo a la lista
+`rexgpu_xenos` del lock con su origen.
 
 Antes de una release pública binaria se debe documentar:
 

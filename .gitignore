@@ -54,6 +54,7 @@ ppc_func_mapping.cpp
 /rexglue-sdk/
 /thirdparty/
 /sdk/
+/tools/
 gamecontrollerdb.txt
 
 # -----------------------------------------------------------------------------

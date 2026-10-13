@@ -22,8 +22,8 @@ certified yet. See [known issues](docs/KNOWN_ISSUES.md).
 1. [Requirements](#1-requirements)
 2. [Prepare your copy of the game](#2-prepare-your-copy-of-the-game)
 3. [Get the project](#3-get-the-project)
-4. [Get the ReXGlue SDK](#4-get-the-rexglue-sdk)
-5. [Generate and build](#5-generate-and-build)
+4. [Quick build: EasyBuild.bat](#4-quick-build-easybuildbat) ← **easiest**
+5. [Manual build](#5-manual-build)
 6. [Play](#6-play)
 7. [Optional: portable package and installer](#7-optional-portable-package-and-installer)
 8. [Troubleshooting](#8-troubleshooting)
@@ -38,8 +38,8 @@ certified yet. See [known issues](docs/KNOWN_ISSUES.md).
 | OS | Windows 10/11 **x64** (the only tested platform) |
 | GPU | Modern, with up-to-date drivers |
 | Visual Studio 2022 | **Desktop development with C++** workload, with the **C++ Clang tools for Windows** (LLVM) and **C++ CMake tools for Windows** components |
-| ReXGlue SDK | Version **0.10.0**, Windows AMD64 (see [step 4](#4-get-the-rexglue-sdk)) |
-| Git | To clone the repository |
+| ReXGlue SDK | Version **0.10.0**, Windows AMD64. `EasyBuild.bat` downloads it for you (manual: [step 5.1](#51-get-the-rexglue-sdk)) |
+| Git | Optional: you can also download the project as a ZIP |
 | Game | Your extracted copy of Bakugan: Defenders of the Core (Xbox 360) |
 | Disk space | ~4 GB for the game + ~1 GB for the build |
 
@@ -99,44 +99,64 @@ If it prints `Compatible executable and expected data sizes`, you're good.
 
 ---
 
-## 4. Get the ReXGlue SDK
+## 4. Quick build: EasyBuild.bat
+
+Once you have Visual Studio installed (step 1) and your extracted game (step 2),
+**double-click `EasyBuild.bat`** in the project folder. It will:
+
+1. Ask for your game folder with a folder picker and verify it.
+2. Check that Visual Studio has the C++, Clang and CMake components. If they're
+   missing, it tells you what to install and can install them for you with `winget`.
+3. Download the official ReXGlue 0.10.0 SDK (~43 MB) into `tools\` and verify
+   its fingerprint.
+4. Generate the code and build, using as many parallel jobs as your CPU/RAM allow.
+5. Pre-fill the launcher with your game folder and offer to open it.
+
+It remembers your game folder for next time. When it finishes, the game is in
+`out\build\publish-release\` and you can jump to [Play](#6-play).
+
+> Don't have Git? On the GitHub page click **Code → Download ZIP**, extract it
+> and double-click `EasyBuild.bat` inside.
+
+---
+
+## 5. Manual build
+
+Only needed if you want full control over each step.
+
+### 5.1 Get the ReXGlue SDK
 
 1. Download **ReXGlue 0.10.0 for Windows AMD64** from the
    [official releases](https://github.com/rexglue/rexglue-sdk/releases).
-2. Extract it to a fixed location, e.g. `C:\Tools\rexglue-0.10.0`.
+2. Extract it to a fixed location, e.g. `C:\Tools`. It creates a `win-amd64` folder.
    That folder (the *SdkRoot*) must contain:
 
    ```
-   C:\Tools\rexglue-0.10.0\
+   C:\Tools\win-amd64\
    ├── bin\rexglue.exe
    ├── bin\rexruntime.dll
    └── include\rex\version.h
    ```
 
-3. Locate the **`rexgpu-xenos.dll`** graphics plugin inside the SDK.
+3. The graphics plugin is `bin\rexgpu-xenos.dll` inside the SDK.
 
 The SHA-256 fingerprints of the tested tools are pinned in
-[dependencies.lock.json](dependencies.lock.json). The `rexgpu-xenos.dll` used
-for testing is a custom ReXGlue build and **does not match** the one in the
-official SDK. If you use the official one (or any other), add
-`-AllowUnverifiedDependencies` when building. The build will be flagged as
-"not yet validated". More details in [dependencies](docs/DEPENDENCIES.md) (Spanish).
+[dependencies.lock.json](dependencies.lock.json). The official SDK matches them,
+including its `rexgpu-xenos.dll`. A custom build of the plugin made by the
+author is also accepted. For any other DLL, add `-AllowUnverifiedDependencies`;
+the build will be flagged as "not yet validated". More details in
+[dependencies](docs/DEPENDENCIES.md) (Spanish).
 
----
-
-## 5. Generate and build
+### 5.2 Generate and build
 
 From the project folder, in PowerShell:
 
 ```powershell
 .\scripts\Build.ps1 `
   -GameRoot      "C:\Games\Bakugan_TM__DOTC" `
-  -SdkRoot       "C:\Tools\rexglue-0.10.0" `
-  -GpuPluginPath "C:\Tools\rexglue-0.10.0\PATH\rexgpu-xenos.dll" `
-  -AllowUnverifiedDependencies
+  -SdkRoot       "C:\Tools\win-amd64" `
+  -GpuPluginPath "C:\Tools\win-amd64\bin\rexgpu-xenos.dll"
 ```
-
-(Drop `-AllowUnverifiedDependencies` if your DLLs match the fingerprints in the lock file.)
 
 What the script does, in order:
 
@@ -223,7 +243,7 @@ your desktop resolution.
 **Portable package** (ZIP with binaries, docs, licenses and SHA-256 sums):
 
 ```powershell
-.\scripts\Package.ps1 -SdkRoot "C:\Tools\rexglue-0.10.0" `
+.\scripts\Package.ps1 -SdkRoot "C:\Tools\win-amd64" `
   -ControllerDatabase "C:\Path\gamecontrollerdb.txt"
 ```
 
@@ -250,7 +270,7 @@ and [publishing guide](docs/PUBLISHING.md) (Spanish).
 | `Unsupported or modified default.xex` | Your XEX isn't the supported version (different region, updated or modified). Compare its SHA-256 with `compatibility.json`. |
 | `Missing or unexpected size: d0X.dat` | A `.dat` is missing or the extraction is incomplete. Extract the disc again. |
 | `This project requires ReXGlue 0.10.0` | `-SdkRoot` points to another SDK version or the wrong folder. It must contain `include\rex\version.h`. |
-| `Dependency hashes differ from the tested build` | Your DLLs/tools aren't the tested ones. Add `-AllowUnverifiedDependencies`. |
+| `Dependency hashes differ from the tested build` | Your SDK/DLL isn't one of the tested ones. Use the official 0.10.0 release, or add `-AllowUnverifiedDependencies`. |
 | `Install Visual Studio with Desktop development with C++...` | Visual Studio or the C++ workload is missing. |
 | `Missing build tool: ...clang++.exe` / `ninja.exe` | Install the **Clang** and **CMake** components in Visual Studio (step 1). |
 | `Codegen did not register required function 0x...` | The generator didn't apply the manifest's functions. Make sure you use SDK 0.10.0 and the repo's unmodified `bakugandotc_manifest.toml`. |

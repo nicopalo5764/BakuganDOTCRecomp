@@ -2,8 +2,18 @@
   "sdk_version": "0.10.0",
   "platform": "win-amd64",
   "sdk_build_timestamp": "20260821_2216",
+  "sdk_download_url": "https://github.com/rexglue/rexglue-sdk/releases/download/v0.10.0/rexglue-sdk-0.10.0-win-amd64.zip",
+  "sdk_zip_sha256": "ad4485da853fbe932e9f5dbb643f9b5fe85dc73775ebbad4df6879fe6df0c11b",
   "rexglue_sha256": "04014c2e5eef3c40bddc490d413e910e5ba98d81aa3da1c1f5d43dd29728ee3a",
   "rexruntime_sha256": "e359209fb2b0570e693c966d4c1d99a82465d36ef70d033833fae56adb2f1b7a",
-  "rexgpu_xenos_sha256": "2dc285556f7870af22d768ca53582582e2ee10619c7dc11eef52546979274802",
-  "note": "GPU plugin was built by the project owner from ReXGlue (confirmed 2026-09-17). Exact commit/build options remain to be recorded. It differs from the installed SDK DLL; official prebuilt compatibility must be tested."
+  "rexgpu_xenos": [
+    {
+      "sha256": "0c23cfa23fc4fa5638dc8a3dc0de87b1041d97705d4677774083f1f350cd8d89",
+      "source": "Official ReXGlue v0.10.0 win-amd64 release (bin/rexgpu-xenos.dll). Tested by the project owner."
+    },
+    {
+      "sha256": "2dc285556f7870af22d768ca53582582e2ee10619c7dc11eef52546979274802",
+      "source": "Custom build by the project owner from ReXGlue (confirmed 2026-09-17). Exact commit/build options not yet recorded."
+    }
+  ]
 }
