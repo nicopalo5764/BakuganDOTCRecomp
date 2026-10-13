@@ -181,3 +181,7 @@ desktop.ini
 $RECYCLE.BIN/
 .DS_Store
 ._*
+
+# Python build/install tooling
+__pycache__/
+*.pyc

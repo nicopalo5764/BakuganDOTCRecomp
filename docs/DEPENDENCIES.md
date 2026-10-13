@@ -32,6 +32,18 @@ afirma que esa colección certifique por sí sola la procedencia de cada binario
 No actualices hashes para ocultar una diferencia: verifica la nueva dependencia,
 prueba el juego y registra el cambio de versión.
 
+## Linux AMD64
+
+El flujo experimental de Linux usa la release oficial ReXGlue 0.10.0 para
+Linux AMD64. `dependencies.linux-amd64.lock.json` registra la URL y SHA-256 del
+ZIP, del generador y de las bibliotecas runtime, GPU Xenos y Tracy. El SHA-256
+del ZIP se contrastó con el digest publicado por GitHub. Las huellas de los
+binarios se calcularon después de verificar ese archivo.
+
+El script comprueba estas huellas antes de generar código y copia las
+bibliotecas compartidas junto al ejecutable, donde las busca su RPATH
+`$ORIGIN`. Véase [LINUX.md](LINUX.md) para los requisitos y pruebas realizadas.
+
 Referencias oficiales:
 
 - https://github.com/rexglue/rexglue-sdk
