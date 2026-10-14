@@ -1,0 +1,16 @@
+name: Linux tooling
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install desktop entry validators
+        run: sudo apt-get update && sudo apt-get install -y desktop-file-utils
+      - name: Test build validation, launchers and installation without game files
+        run: python -B -m unittest discover -s scripts -p 'test_*linux.py' -v

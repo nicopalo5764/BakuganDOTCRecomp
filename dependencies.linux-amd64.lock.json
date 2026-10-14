@@ -1,0 +1,12 @@
+{
+  "sdk_version": "0.10.0",
+  "platform": "linux-amd64",
+  "sdk_download_url": "https://github.com/rexglue/rexglue-sdk/releases/download/v0.10.0/rexglue-sdk-0.10.0-linux-amd64.zip",
+  "sdk_zip_sha256": "0388edb3f8fb1444f1b0ad5d440cb02d9690ac20a76b04fd6b7dcc19f59328a6",
+  "files": {
+    "bin/rexglue": "a5bed3c632f444d336c648b75020a7ffd7c580e4356a5ec0046e6906ecfbba05",
+    "lib/librexruntime.so": "d8fb56afa03ce924394691685f51a3e5233a2cc542f4c903341ad8937ab81ffb",
+    "lib/librexgpu-xenos.so": "09745cbdda1b30b91df8c371c8141a57a41be499eab745b12f4a3041561729f7",
+    "lib/libTracyClient.so": "bb69ee89fa9c11eb395666d5aec58c800018ee311f8fa337c9699086622297dc"
+  }
+}

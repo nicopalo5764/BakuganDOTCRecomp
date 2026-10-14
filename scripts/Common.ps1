@@ -63,7 +63,7 @@ function Initialize-BuildTools {
 function Get-PublicSourceFiles {
     # Explicit allowlist: never recursively export the entire workspace.
     $files = @('CMakeLists.txt','CMakePresets.json','bakugandotc_manifest.toml',
-        'compatibility.json','dependencies.lock.json','README.md','README.es.md','LICENSE','THIRD_PARTY_NOTICES.md',
+        'compatibility.json','dependencies.lock.json','dependencies.linux-amd64.lock.json','README.md','README.es.md','LICENSE','THIRD_PARTY_NOTICES.md',
         'MUSIC_FIX.md','EasyBuild.bat','.gitignore','.gitattributes',
         'src/main.cpp','src/bakugandotc_app.h','src/hooks/music_startup_hooks.cpp',
         'src/hooks/music_trace_hooks.cpp','src/discord/discord_rpc.cpp','src/discord/discord_rpc.h',

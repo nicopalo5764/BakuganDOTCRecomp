@@ -3,7 +3,8 @@
 🇬🇧 **English** · 🇪🇸 [Español](README.es.md)
 
 An experimental community project that runs **Bakugan: Defenders of the
-Core** (Xbox 360) natively on Windows x64 through static recompilation with
+Core** (Xbox 360) natively on Windows x64, with an experimental Linux AMD64
+build path, through static recompilation with
 [ReXGlue](https://github.com/rexglue/rexglue-sdk). This is not an official
 release and is not affiliated with the game's rights holders, Microsoft or Xbox.
 
@@ -16,6 +17,14 @@ certified yet. See [known issues](docs/KNOWN_ISSUES.md).
 > game's C++ code is generated on your machine from that copy.
 
 ---
+
+## Linux
+
+See the [Linux build and installation guide](docs/LINUX.md). It uses the official
+ReXGlue 0.10.0 Linux AMD64 SDK and Python scripts to build, install locally, and
+add **Bakugan: Defenders of the Core** to your application menu. The title screen,
+audio and controller response have been checked on one Linux machine; gameplay
+and saves still need testing. The instructions below cover Windows.
 
 ## Contents
 
@@ -35,7 +44,7 @@ certified yet. See [known issues](docs/KNOWN_ISSUES.md).
 
 | What | Details |
 |---|---|
-| OS | Windows 10/11 **x64** (the only tested platform) |
+| OS | Windows 10/11 **x64** (Linux uses the separate guide above) |
 | GPU | Modern, with up-to-date drivers |
 | Visual Studio 2022 | **Desktop development with C++** workload, with the **C++ Clang tools for Windows** (LLVM) and **C++ CMake tools for Windows** components |
 | ReXGlue SDK | Version **0.10.0**, Windows AMD64. `EasyBuild.bat` downloads it for you (manual: [step 5.1](#51-get-the-rexglue-sdk)) |
